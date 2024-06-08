@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report
 
 
 # Крок 1
-file_name = 'dataset_2.txt' 
+file_name = 'lr3/dataset_2.txt' 
 df = pd.read_csv(file_name, header = None) 
 
 # Крок 2
@@ -49,8 +49,16 @@ dot_data_entropy = export_graphviz(tree_entropy, out_file=None)
 graph_entropy = graphviz.Source(dot_data_entropy) 
 graph_entropy.render("tree_entropy") 
 
+y_train_pred_gini = tree_gini.predict(X_train)
+y_train_pred_entropy = tree_entropy.predict(X_train)
+classification_train_gini = classification_report(y_train, y_train_pred_gini)
+classification_train_entropy = classification_report(y_train, y_train_pred_entropy)
+
 classification_test_gini = classification_report(y_test, y_test_pred_gini)
 classification_test_entropy = classification_report(y_test, y_test_pred_entropy)
+
+print(f'Класифікаційні метрики для тренувальної вибірки (Джині): \n{classification_train_gini}')
+print(f'Класифікаційні метрики для тренувальної вибірки (ентропія): \n{classification_train_entropy}')
 
 print(f'Класифікаційні метрики для тестової вибірки (Джині): \n{classification_test_gini}')
 print(f'Класифікаційні метрики для тестової вибірки (ентропія): \n{classification_test_entropy}')
